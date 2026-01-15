@@ -15,28 +15,30 @@ function divide(a,b){
 
 function operate(expresion){
     //TODO: will get the operator from the expresion and evaluate acordingly
+    label.textContent="operating...";
+    let operators="+-*/";
+    label.textContent=eval(expresion);
+
 }
 
-function refreshCSS() {
-  let links = document.getElementsByTagName('link');
-  for (let i = 0; i < links.length; i++) {
-    if (links[i].getAttribute('rel') == 'stylesheet') {
-      let href = links[i].getAttribute('href').split('?')[0];
-      // Append a unique query parameter (e.g., a timestamp) to the href
-      let newHref = href + '?version=' + new Date().getTime();
-      links[i].setAttribute('href', newHref);
+function click(event){
+    event.preventDefault();
+    if(event.target.textContent=="=") {
+        operate(label.textContent);
+        return;
     }
-  }
+    label.textContent+=event.target.textContent;
 }
 
+const label=document.querySelector("label");
 //adding numbers to the calculator
 var buttons=Array.from(document.querySelectorAll(".push"));
-let btnText=["CE",..."/*-789+456123=0.".split("")]
+let btnText=["CE",..."0.123456789/*-+=".split("")]
 
 console.log(btnText);
 buttons.forEach((element,index) => {
     element.textContent=btnText[index];
-    element.style.flexGrow="1";
+    element.addEventListener("click",click);
     if(btnText[index]=="0"){
         element.setAttribute("id","zero");
         element.style.background="green";
@@ -44,4 +46,3 @@ buttons.forEach((element,index) => {
     }
 });
 
-refreshCSS();
