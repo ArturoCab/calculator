@@ -13,36 +13,67 @@ function divide(a,b){
     return a/b;
 }
 
-function operate(expresion){
-    //TODO: will get the operator from the expresion and evaluate acordingly
-    label.textContent="operating...";
-    let operators="+-*/";
-    label.textContent=eval(expresion);
-
-}
 
 function click(event){
     event.preventDefault();
     if(event.target.textContent=="=") {
-        operate(label.textContent);
+        operate(input.textContent);
         return;
     }
-    label.textContent+=event.target.textContent;
+    input.textContent+=event.target.textContent;
 }
 
-const label=document.querySelector("label");
+function setCalc(event){
+    event.preventDefault();
+    let key=event.key;
+    console.log(key);
+    let numbers="0123456789/*-+.";
+    let operators="/*-+";
+
+    //making sure the key pressed was a number
+    if(numbers.includes(key)){
+        event.target.value+=key;
+    }
+    if(operators.includes(key)){
+        calculatorObj.op=true;
+        calculatorObj.operator=key;
+    }
+
+    //making sure the last symbol is legit
+    if(key=="Enter"){
+        calculatorObj.operate();
+    }
+}
+
+//calculator as an object
+
+const calculatorObj={
+    ANS:0,
+    operand1:"",
+    operand2:"",
+    operator:"",
+    op:false,
+    operate(){
+        let operands=input.value.split(this.operator);
+        operand1=operands[0];
+        operand2=operands[1];
+        console.log(this.operand1);
+        console.log(this.operator);
+        console.log(this.operand2);
+        
+    }
+};
+
+const input=document.querySelector("input");
+input.addEventListener("keypress",setCalc);
 //adding numbers to the calculator
 var buttons=Array.from(document.querySelectorAll(".push"));
-let btnText=["CE",..."0.123456789/*-+=".split("")]
+let btnText=["C",..."0.123456789/*-+=".split("")]
 
 console.log(btnText);
 buttons.forEach((element,index) => {
     element.textContent=btnText[index];
     element.addEventListener("click",click);
-    if(btnText[index]=="0"){
-        element.setAttribute("id","zero");
-        element.style.background="green";
-        element.style.flexGrow="2";
-    }
+    
 });
 
