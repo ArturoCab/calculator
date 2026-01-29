@@ -16,6 +16,7 @@ A simple calculator built with HTML, CSS, and JavaScript as part of **The Odin P
 
 ![Calculator Screenshot](./screenshot.png)
 
+https://arturocab.github.io/calculator/
 ---
 
 ## Built With
